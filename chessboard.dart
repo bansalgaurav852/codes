@@ -1,52 +1,37 @@
 import 'package:flutter/material.dart';
 
-const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
-
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: darkBlue,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Center(
-          child: MyWidget(),
+          child: Column(
+            children: [
+              for (int i = 0; i < 8; i++)
+                if (i % 2 == 0) row(white, black) else row(black, white)
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class MyWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(children:[
-       for(int i=0;i<8;i++)
-   if(i%2==0)
-    Row(children:[
-       for(int j=8;j>0;j--)
-       if(j%2==0)
+  Widget row(one, two) => Row(children: [
+        for (int j = 8; j > 0; j--)
+          if (j % 2 == 0) one else two
+      ]);
 
-        Container(color:Colors.white,height:30,width:30)
-       else
-Container(color:Colors.cyan,height:30,width:30)
-    ])
-     
-        else
-       Row(children:[ for(int j=8;j>0;j--)
-       if(j%2==0)
-         Container(color:Colors.cyan,height:30,width:30)
-       else
-         Container(color:Colors.white,height:30,width:30),])
-       
-     
- 
-    ]);
-  }
+  Widget get black => Container(color: Colors.black, height: 30, width: 30);
+  Widget get white => Container(color: Colors.white, height: 30, width: 30);
 }
